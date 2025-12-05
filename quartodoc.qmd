@@ -4,4 +4,35 @@ author: "Poppy Platt"
 format: html
 ---
 
-## Load my data
+## Loading my data
+
+This data has now been loaded and cleaned of N/As. For this you will need packages tidyverse and dplyr.
+
+Empty cells are labelled N/A when called into R.
+
+Entries with multiple moods are then duplicated so one cell with multiple moods is transformed into multiple cells with one mood.
+
+Two empty rows are removed.
+
+All data from before 2024 (entries with no mood listed) are removed.
+
+```{r}
+library(here)
+
+# Calling my data, and calling any empty cells N/A
+sg_initial <- read.csv("pplatt_storygraph.csv", na.strings = c("", "NA"))
+
+library(tidyverse)
+library(dplyr)
+
+# Changing cells with multiple moods into multiple rows with one mood
+new_sg <- sg_initial %>%
+  separate_rows(Moods, sep = ",") %>%
+  mutate(Moods = trimws(Moods))
+
+# Removing the two rows of X that simply have NAs
+sg_noXrow<-select(new_sg, -X, -X.1) 
+
+# Removing rows that have NA in the Moods column, aka all books read before 2024
+sg_clear <- sg_noXrow %>% na.omit()
+```
