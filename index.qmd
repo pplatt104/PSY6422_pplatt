@@ -36,6 +36,8 @@ library(here)
 # Calling my data, and calling any empty cells N/A
 sg_initial <- read.csv("pplatt_storygraph.csv", na.strings = c("", "NA"))
 
+#| message: false
+#| warning: false
 library(tidyverse)
 library(dplyr)
 
