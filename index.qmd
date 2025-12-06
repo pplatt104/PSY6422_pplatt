@@ -8,10 +8,6 @@ format: html
 
 This data is loaded from Storygraph, an app that tracks reading habits. I used my own data from 2024-2026, which is how long I have been actively tracking what I read. This data was exported from my account, and can be found at this link: pplatt_storygraph.csv as an excel spreadsheet that can be imported into r.
 
-```{r}
-head(sg_initial)
-```
-
 The data contains book title, author, dates read, moods and rating out of 5 stars.
 
 ## Research Question
