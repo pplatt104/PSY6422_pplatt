@@ -36,3 +36,30 @@ sg_noXrow<-select(new_sg, -X, -X.1)
 # Removing rows that have NA in the Moods column, aka all books read before 2024
 sg_clear <- sg_noXrow %>% na.omit()
 ```
+
+# Visualizing my data
+
+group by mood and rating, count how many are in mood and rating
+
+```{r}
+# Creating a new dataset with Moods, Star rating, and how many stars I gave moods.
+sg_count <-
+  sg_clear %>% 
+  group_by(Moods,Star.Rating) %>%
+  summarise(count = n())
+
+
+
+# Heatmap illustrating the moods of books I read and how many stars I gave books that had these moods, with colour representing how many books I gave that number of stars.
+moods_heatmap <- sg_count %>%
+  ggplot(mapping = aes(x = Moods, y = Star.Rating, fill = count)) +
+  geom_tile() +
+  scale_fill_viridis_c(option = "rocket") + #colour package
+  labs(title = "Heatmap of Moods by Star rating",
+       subtitle = "Moods coloured by frequency of rating",
+       x = "Moods", y = "Star rating", fill = "Frequency") +
+  theme(axis.text.y = element_text(size = 6)) +
+          coord_flip()
+
+moods_heatmap
+```
